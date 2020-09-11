@@ -27,6 +27,7 @@ router.get('/all', async (req: Request, res: Response) => {
 
 router.post('/add', async (req: Request, res: Response) => {
     const { user } = req.body;
+    console.log(user)
     if (!user) {
         return res.status(BAD_REQUEST).json({
             error: paramMissingError,

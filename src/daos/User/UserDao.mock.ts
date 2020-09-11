@@ -122,7 +122,7 @@ class UserDao extends MockDaoMock implements IUserDao {
     public async call(id: number):Promise<Number|null> {
         try {
             let db =this.db?this.db: await super.openDb();
-            
+            let status;
             [db,status  ]= this.updateUserNA(db, id, (user: IUser) => this.setPanic(user))
             await super.saveDb(db);
             return Number(status) ; 
@@ -146,7 +146,7 @@ class UserDao extends MockDaoMock implements IUserDao {
     public async add(user: IUser): Promise<void> {
         try {
             const db =this.db?this.db: await super.openDb();
-            user.id = getRandomInt();
+            //user.id = getRandomInt();
             db.users.push(user);
             await super.saveDb(db);
 
@@ -158,6 +158,8 @@ class UserDao extends MockDaoMock implements IUserDao {
         try {
             let db =this.db?this.db: await super.openDb();
             let exist =  this.getOneNA(db,id_contact);
+            console.log(exist,"'"+id_user+"'")
+            console.log(exist,"'"+id_contact+"'")
             let status 
             if(!exist )return null;
             [db,status  ]=this.updateUserNA(db,id_user,(user:IUser)=>this.addContactUser(user,id_contact))
